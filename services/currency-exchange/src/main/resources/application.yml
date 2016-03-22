@@ -1,0 +1,20 @@
+server:
+  port: 0
+  tomcat:
+    max-threads: 100
+
+spring:
+  application:
+    name: currency-exchange
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.cloud.service: TRACE
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
