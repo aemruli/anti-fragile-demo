@@ -1,5 +1,6 @@
 package org.springframework.cloud.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -29,6 +30,7 @@ public class RestMoneyExchangeGateway implements MoneyExchangeGateway {
     }
 
     @Override
+    @HystrixCommand
     public Double exchangeMoney(String currency, long amount) {
         return restTemplate.getForObject("http://"+ getServiceHostNameAndPort()
                 + "/exchange/{currency}/{price}",Double.class, currency, amount);
