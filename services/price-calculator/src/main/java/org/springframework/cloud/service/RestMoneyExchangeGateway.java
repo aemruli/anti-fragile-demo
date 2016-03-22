@@ -3,6 +3,7 @@ package org.springframework.cloud.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +22,10 @@ public class RestMoneyExchangeGateway implements MoneyExchangeGateway {
     private DiscoveryClient discoveryClient;
 
     public RestMoneyExchangeGateway() {
-        this.restTemplate =  new RestTemplate();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setReadTimeout(300);
+
+        this.restTemplate =  new RestTemplate(requestFactory);
     }
 
     @Override
